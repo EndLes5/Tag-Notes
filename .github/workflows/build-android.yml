@@ -16,14 +16,17 @@ jobs:
         with:
           node-version: '18'
       
+      - name: Enable Yarn
+        run: corepack enable
+      
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
       
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
+      - name: Install dependencies with Yarn
+        run: yarn install
       
       - name: Build APK with EAS
         run: eas build --platform android --profile preview --non-interactive --no-wait
