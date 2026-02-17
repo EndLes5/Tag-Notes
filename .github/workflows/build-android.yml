@@ -8,21 +8,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: "yarn"
 
       - name: Enable Yarn Classic
         run: |
           corepack enable
           corepack prepare yarn@1.22.22 --activate
 
-      # DEBUG STEP (confirms Yarn version)
       - name: Debug Yarn Version
         run: yarn --version
 
@@ -33,7 +30,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
 
       - name: Build APK with EAS
         run: eas build --platform android --profile preview --non-interactive --no-wait
